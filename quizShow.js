@@ -1,9 +1,9 @@
 /**
  * Created by jazoulai on 5/8/14.
  */
-var Questions =[
+var Questions = [
     {
-     question: "What city where you born in?",
+        question: "What city where you born in?",
         choices: [
             "San Antonio",
             "Brooklyn",
@@ -35,23 +35,45 @@ var Questions =[
 ];
 
 
-var div = document.getElementById("question");
+var q = document.getElementById("question");
+var choice = Questions[0].choices;
+q.innerHTML = Questions[0].question;
 
-window.onload = function(){
+choice.forEach(function(e){
 
-    div.innerHTML = Questions[0].question;
+    var c = document.getElementById("choices");
+    var listItem = document.createElement('li');
+    var text = document.createTextNode(e);
+    c.appendChild(listItem);
+    listItem.appendChild(text);
+
+});
 
 
-    function next(){
 
-        div.innerHTML = Questions[1].question;
+
+var i = 0;
+function next() {
+
+    if (i < Questions.length - 1) {
+        i++;
+        q.innerHTML = Questions[i].question;
+
+        var choice = Questions[i].choices;
+
+        choice.forEach(function(e){
+            console.log(e);
+        });
+
+
     }
 
+}
 
-    var button = document.getElementById('next');
+var button = document.getElementById('next');
 
-    button.onclick = function(){
-        next();
-    };
-
+button.onclick = function () {
+    next();
 };
+
+
