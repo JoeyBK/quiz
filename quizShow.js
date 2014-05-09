@@ -34,42 +34,37 @@ var Questions = [
     }
 ];
 
+var questionDiv = document.getElementById("question");
+var choiceDiv = document.getElementById("choices");
+var button = document.getElementById('next');
+var i = -1;
 
-var q = document.getElementById("question");
-var c = document.getElementById("choices");
-var choice = Questions[0].choices;
-q.innerHTML = Questions[0].question;
-
-choice.forEach(function(e){
-    var listItem = document.createElement('li');
-    var text = document.createTextNode(e);
-    listItem.appendChild(text);
-    c.appendChild(listItem);
-});
-
-
-
-
-var i = 0;
 function next() {
     if (i < Questions.length - 1) {
 
         i++;
 
-        q.innerHTML = Questions[i].question;
+        questionDiv.innerHTML = Questions[i].question;
         var choice = Questions[i].choices;
-        c.innerHTML = '';
+        choiceDiv.innerHTML = '';
 
         choice.forEach(function(e){
-            var listItem = document.createElement('li');
-            var text = document.createTextNode(e);
-            listItem.appendChild(text);
-            c.appendChild(listItem);
+            var listItem = document.createElement('input');
+            var label = document.createElement('label');
+            var brake = document.createElement('br');
+            listItem.setAttribute('type', 'radio');
+            listItem.setAttribute('name', 'multi');
+            listItem.setAttribute('id', e);
+            label.setAttribute('for', e);
+            label.innerHTML = e;
+            choiceDiv.appendChild(listItem);
+            choiceDiv.appendChild(label);
+            choiceDiv.appendChild(brake);
         });
     }
 }
 
-var button = document.getElementById('next');
+next();
 
 button.onclick = function () {
     next();
