@@ -36,17 +36,15 @@ var Questions = [
 
 
 var q = document.getElementById("question");
+var c = document.getElementById("choices");
 var choice = Questions[0].choices;
 q.innerHTML = Questions[0].question;
 
 choice.forEach(function(e){
-
-    var c = document.getElementById("choices");
     var listItem = document.createElement('li');
     var text = document.createTextNode(e);
-    c.appendChild(listItem);
     listItem.appendChild(text);
-
+    c.appendChild(listItem);
 });
 
 
@@ -54,20 +52,21 @@ choice.forEach(function(e){
 
 var i = 0;
 function next() {
-
     if (i < Questions.length - 1) {
-        i++;
-        q.innerHTML = Questions[i].question;
 
+        i++;
+
+        q.innerHTML = Questions[i].question;
         var choice = Questions[i].choices;
+        c.innerHTML = '';
 
         choice.forEach(function(e){
-            console.log(e);
+            var listItem = document.createElement('li');
+            var text = document.createTextNode(e);
+            listItem.appendChild(text);
+            c.appendChild(listItem);
         });
-
-
     }
-
 }
 
 var button = document.getElementById('next');
@@ -75,5 +74,3 @@ var button = document.getElementById('next');
 button.onclick = function () {
     next();
 };
-
-
