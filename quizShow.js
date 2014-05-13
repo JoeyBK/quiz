@@ -34,9 +34,35 @@ var Questions = [
     }
 ];
 
+/*var EventUtil = {
+
+    addHandler: function(element, type, handler){
+        if(element.addEventListener){
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent){
+            element.attachEvent("on" + type, handler);
+        } else {
+            element["on" + type] + handler;
+        }
+    },
+
+    removeHandler: function(element, type, handler){
+        if(element.removeEventListener){
+            element.removeEventListener(type, hanlder, false);
+        } else if (element.detachEvent){
+            element.detachEvent("on" + type, handler);
+        } else {
+            element["on" + type] = null;
+        }
+    }
+
+};*/
+
 var questionDiv = document.getElementById("question");
 var choiceDiv = document.getElementById("choices");
 var button = document.getElementById('next');
+var form = document.getElementById('choices');
+var radios = document.getElementsByName('multi');
 var i = -1;
 
 function next() {
@@ -55,17 +81,40 @@ function next() {
             listItem.setAttribute('type', 'radio');
             listItem.setAttribute('name', 'multi');
             listItem.setAttribute('id', e);
+            listItem.setAttribute('onclick', 'answer(this);');
             label.setAttribute('for', e);
             label.innerHTML = e;
             choiceDiv.appendChild(listItem);
             choiceDiv.appendChild(label);
             choiceDiv.appendChild(brake);
         });
-    }
 }
+}
+
+
 
 next();
 
 button.onclick = function () {
     next();
 };
+
+/*form.elements[0].onclick = function(){
+    form.elements[0].checked=true;
+        if(radios[0].checked){
+            alert('hi');
+        }
+};*/
+
+function answer(selection){
+
+    selection.checked=true;
+
+    for(var i = 0; i < radios.length; i++){
+        if(radios[i].checked){
+            console.log(radios[i].id);
+            break;
+        }
+    }
+
+}
