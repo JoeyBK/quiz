@@ -10,7 +10,7 @@ var Questions = [
             "Chicago",
             "New Paltz"
         ],
-        correctAnswer: 1
+        correctAnswer: "Brooklyn"
     },
     {
         question: "What planet are you from?",
@@ -20,7 +20,7 @@ var Questions = [
             "Saturn",
             "Earth"
         ],
-        correctAnswer: 3
+        correctAnswer: "Earth"
     },
     {
         question: "What is 3 + 7?",
@@ -30,33 +30,9 @@ var Questions = [
             10,
             -1
         ],
-        correctAnswer: 2
+        correctAnswer: 10
     }
 ];
-
-/*var EventUtil = {
-
-    addHandler: function(element, type, handler){
-        if(element.addEventListener){
-            element.addEventListener(type, handler, false);
-        } else if (element.attachEvent){
-            element.attachEvent("on" + type, handler);
-        } else {
-            element["on" + type] + handler;
-        }
-    },
-
-    removeHandler: function(element, type, handler){
-        if(element.removeEventListener){
-            element.removeEventListener(type, hanlder, false);
-        } else if (element.detachEvent){
-            element.detachEvent("on" + type, handler);
-        } else {
-            element["on" + type] = null;
-        }
-    }
-
-};*/
 
 var questionDiv = document.getElementById("question");
 var choiceDiv = document.getElementById("choices");
@@ -72,7 +48,9 @@ function next() {
 
         questionDiv.innerHTML = Questions[i].question;
         var choice = Questions[i].choices;
+
         choiceDiv.innerHTML = '';
+
 
         choice.forEach(function(e){
             var listItem = document.createElement('input');
@@ -81,14 +59,33 @@ function next() {
             listItem.setAttribute('type', 'radio');
             listItem.setAttribute('name', 'multi');
             listItem.setAttribute('id', e);
-            listItem.setAttribute('onclick', 'answer(this);');
             label.setAttribute('for', e);
             label.innerHTML = e;
             choiceDiv.appendChild(listItem);
             choiceDiv.appendChild(label);
             choiceDiv.appendChild(brake);
         });
+    }
 }
+
+
+var j = 0;
+function answer(){
+    var correct = Questions[j].correctAnswer;
+    if(j < Questions.length){
+        j++;
+    }
+    for(var i = 0; i < radios.length; i++){
+        if(radios[i].checked){
+            if(radios[i].id == correct){
+                console.log('good job!');
+            } else {
+                console.log('try again!');
+            }
+
+        }
+    }
+
 }
 
 
@@ -96,25 +93,7 @@ function next() {
 next();
 
 button.onclick = function () {
+    answer();
     next();
 };
 
-/*form.elements[0].onclick = function(){
-    form.elements[0].checked=true;
-        if(radios[0].checked){
-            alert('hi');
-        }
-};*/
-
-function answer(selection){
-
-    selection.checked=true;
-
-    for(var i = 0; i < radios.length; i++){
-        if(radios[i].checked){
-            console.log(radios[i].id);
-            break;
-        }
-    }
-
-}
