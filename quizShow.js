@@ -39,7 +39,11 @@ var choiceDiv = document.getElementById("choices");
 var button = document.getElementById('next');
 var form = document.getElementById('choices');
 var radios = document.getElementsByName('multi');
+var score = 0;
+var scoreDiv = document.getElementById('score');
 var i = -1;
+
+scoreDiv.innerHTML = 'score: ' + score;
 
 function next() {
     if (i < Questions.length - 1) {
@@ -72,20 +76,22 @@ function next() {
 var j = 0;
 function answer(){
     var correct = Questions[j].correctAnswer;
-    if(j < Questions.length){
-        j++;
-    }
+
+       if(j < Questions.length){
+           j++;
+        }
+
     for(var i = 0; i < radios.length; i++){
         if(radios[i].checked){
             if(radios[i].id == correct){
-                console.log('good job!');
+                score += 5;
+                scoreDiv.innerHTML = 'score: ' + score;
             } else {
                 console.log('try again!');
             }
 
         }
     }
-
 }
 
 
