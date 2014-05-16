@@ -10,7 +10,7 @@ var allQuestions = [
             "Chicago",
             "New Paltz"
         ],
-        correctAnswer: "Brooklyn"
+        correctAnswer: 1
     },
     {
         question: "What planet are you from?",
@@ -20,7 +20,7 @@ var allQuestions = [
             "Saturn",
             "Earth"
         ],
-        correctAnswer: "Earth"
+        correctAnswer: 3
     },
     {
         question: "What is 3 + 7?",
@@ -30,7 +30,7 @@ var allQuestions = [
             10,
             -1
         ],
-        correctAnswer: 10
+        correctAnswer: 3
     }
 ];
 
@@ -65,38 +65,47 @@ Question.prototype.getCorrectAnswer = function() {
     return this.correctAnswer;
 };
 
-//IN PROGRESS [.getAnswer]
-/*Question.prototype.getUserAnswer = function(){
+Question.prototype.getUserAnswer = function(){
     var radio = document.getElementsByName('choice');
     for(var i=0; i < radio.length; i++){
-        if(radio[i]){
-            return this.userAnswer += radio[i].value;
-        } else {
-            return this.userAnswer += 'try again!';
+        if(radio[i].checked){
+            return radio[i].value;
         }
     }
-};*/
+};
 
 Question.prototype.displayQuestion = function(){
     var questionToDisplay = '<div class="question">' + this.question + '</div><ul>';
     choiceCounter = 0;
-
+    var quizDiv = document.getElementById('quiz');
     this.choices.forEach(function(eachChoice){
         questionToDisplay += '<li><input type="radio" name="choice" value="' + choiceCounter + '">' + eachChoice + '</li>';
         choiceCounter++
     });
-
     questionToDisplay += '</ul>';
-
-    var quizDiv = document.getElementById('quiz');
-
     quizDiv.innerHTML = questionToDisplay;
 };
 
-Question.prototype.loadQuiz = function(){
-    var i = 0;
-    var quest = new MultipleChoiceQuestion(allQuestions[i].question, allQuestions[i].choices, allQuestions[i].correctAnswer);
-    quest.displayQuestion();
+
+
+var i = 0;
+Question.prototype.loadQuestion = function(){
+    if(i < allQuestions.length){
+        var quest = new MultipleChoiceQuestion(allQuestions[i].question, allQuestions[i].choices, allQuestions[i].correctAnswer);
+        quest.displayQuestion();
+        i++;
+    }
 };
 
-Question.prototype.loadQuiz();
+Question.prototype.tallyScore = function(){
+    console.log(Question.prototype.getUserAnswer());
+};
+
+Question.prototype.loadQuestion();
+
+var button = document.getElementById('next');
+
+button.onclick = function(){
+    Question.prototype.tallyScore();
+    Question.prototype.loadQuestion();
+};
