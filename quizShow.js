@@ -1,111 +1,112 @@
-/**
- * Created by jazoulai on 5/8/14.
- */
+//define questions
 var allQuestions = [
     {
-        question: "What city where you born in?",
-        choices: [
-            "San Antonio",
-            "Brooklyn",
-            "Chicago",
-            "New Paltz"
-        ],
-        correctAnswer: 1
+        question    : "Before it was named JavaScript, what was the language called?",
+        choices     : ["TypeScript", "Java", "JScript", "LiveScript"],
+        correctAnswer      : 3
     },
     {
-        question: "What planet are you from?",
-        choices: [
-            "Mars",
-            "Venus",
-            "Saturn",
-            "Earth"
-        ],
-        correctAnswer: 3
+        question    : "Who did originally develop JavaScript?",
+        choices     : ["Bill Gates", "Brendan Eich", "Douglas CrockFord", "Nicholas Zakas", "Steve Jobs"],
+        correctAnswer      : 1
     },
     {
-        question: "What is 3 + 7?",
-        choices: [
-            6,
-            9,
-            10,
-            -1
-        ],
-        correctAnswer: 3
+        question    : "Which browser was the first to implement JavaScript?",
+        choices     : ["Internet Explorer", "Netscape Navigator", "Opera"],
+        correctAnswer      : 1
+    },
+    {
+        question    : "Microsoft called JavaScript something else to avoid trademark issues. What was that name?",
+        choices     : ["MicroScript", "IEScript", "VBScript", "JScript", "BasicScript"],
+        correctAnswer      : 3
     }
 ];
 
-function inheritPrototype(childObject, parentObject) {
-    // As discussed above, we use the Crockford’s method to copy the properties and methods from the parentObject onto the childObject
-// So the copyOfParent object now has everything the parentObject has
-    var copyOfParent = Object.create(parentObject.prototype);
-
-    //Then we set the constructor of this new object to point to the childObject.
-// Why do we manually set the copyOfParent constructor here, see the explanation immediately following this code block.
-    copyOfParent.constructor = childObject;
-
-    // Then we set the childObject prototype to copyOfParent, so that the childObject can in turn inherit everything from copyOfParent (from parentObject)
-    childObject.prototype = copyOfParent;
-}
-
-function MultipleChoiceQuestion(theQuestion, theChoices, theCorrectAnswer){
-    Question.call(this, theQuestion, theChoices, theCorrectAnswer);
-}
-
-inheritPrototype(MultipleChoiceQuestion, Question);
 
 
-function Question(theQuestion, theChoices, theCorrectAnswer){
-    this.question = theQuestion;
-    this.choices = theChoices;
-    this.correctAnswer = theCorrectAnswer;
-    this.userAnswer = '';
-}
 
-Question.prototype.getCorrectAnswer = function() {
-    return this.correctAnswer;
+
+var quizEngine = {};
+quizEngine.currentQuestionIndex = 0;
+quizEngine.score = 0;
+quizEngine.questionBox = document.getElementById("question");
+quizEngine.answersBox = document.getElementById("answers");
+quizEngine.scoreBox = document.getElementById("score");
+quizEngine.button = document.getElementById("button");
+
+quizEngine.run_quiz = function(){
+    if(this.currentQuestionIndex < allQuestions.length){
+        this.clear_question();
+        this.print_question();
+        this.print_answers();
+    }else{
+        this.compute_score();
+    }
 };
 
-Question.prototype.getUserAnswer = function(){
-    var radio = document.getElementsByName('choice');
-    for(var i=0; i < radio.length; i++){
-        if(radio[i].checked){
-            return radio[i].value;
+quizEngine.print_question = function(){
+        quizEngine.questionBox.innerHTML = allQuestions[this.currentQuestionIndex].question;
+};
+
+quizEngine.print_answers = function(){
+  var choice = allQuestions[this.currentQuestionIndex].choices;
+    choice.forEach(function(e){
+        var listItem = document.createElement('input');
+        var label = document.createElement('label');
+        var brake = document.createElement('br');
+        listItem.setAttribute('type', 'radio');
+        listItem.setAttribute('name', 'currentAnswer');
+        listItem.setAttribute('class', "radioAnswer");
+        listItem.setAttribute('value', e);
+        label.setAttribute('for', e);
+        label.innerHTML = e;
+        quizEngine.answersBox.appendChild(listItem);
+        quizEngine.answersBox.appendChild(label);
+        quizEngine.answersBox.appendChild(brake);
+    });
+
+};
+
+quizEngine.compute_score = function(){
+    quizEngine.clear_question();
+    quizEngine.scoreBox.innerHTML = "Your score: " + quizEngine.score;
+};
+
+quizEngine.next_question = function(){
+    quizEngine.check_answer();
+    quizEngine.currentQuestionIndex ++;
+    quizEngine.run_quiz();
+};
+
+quizEngine.clear_question = function(){
+    quizEngine.questionBox.innerHTML = '';
+    quizEngine.answersBox.innerHTML = '';
+};
+
+quizEngine.check_answer = function(){
+    var radios = quizEngine.answersBox.getElementsByTagName('input');
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+
+            var value = radios[i].value;
+
+            var correct_answer_index = allQuestions[quizEngine.currentQuestionIndex].correctAnswer;
+            var currentCorrectAnswer = allQuestions[quizEngine.currentQuestionIndex].choices[correct_answer_index];
+
+            if(value == currentCorrectAnswer){ //if correct increment score
+                quizEngine.score ++;
+            }else{
+                console.log("wrong answer");
+            }
         }
     }
 };
 
-Question.prototype.displayQuestion = function(){
-    var questionToDisplay = '<div class="question">' + this.question + '</div><ul>';
-    choiceCounter = 0;
-    var quizDiv = document.getElementById('quiz');
-    this.choices.forEach(function(eachChoice){
-        questionToDisplay += '<li><input type="radio" name="choice" value="' + choiceCounter + '">' + eachChoice + '</li>';
-        choiceCounter++
-    });
-    questionToDisplay += '</ul>';
-    quizDiv.innerHTML = questionToDisplay;
-};
+quizEngine.run_quiz();
 
 
 
-var i = 0;
-Question.prototype.loadQuestion = function(){
-    if(i < allQuestions.length){
-        var quest = new MultipleChoiceQuestion(allQuestions[i].question, allQuestions[i].choices, allQuestions[i].correctAnswer);
-        quest.displayQuestion();
-        i++;
-    }
-};
+quizEngine.button.onclick = function(){
+    quizEngine.next_question();
 
-Question.prototype.tallyScore = function(){
-    console.log(Question.prototype.getUserAnswer());
-};
-
-Question.prototype.loadQuestion();
-
-var button = document.getElementById('next');
-
-button.onclick = function(){
-    Question.prototype.tallyScore();
-    Question.prototype.loadQuestion();
 };
