@@ -6,6 +6,8 @@ $(document).ready(function(){
 
     returnAjax().done(function(allQuestions){
 
+
+
         var quizEngine = {};
         quizEngine.currentQuestionIndex = 0;
         quizEngine.score = 0;
@@ -23,10 +25,11 @@ $(document).ready(function(){
         };
 
         quizEngine.print_question = function () {
-            var currentQuestion = allQuestions[this.currentQuestionIndex].question;
-            var currentQuestionHtml = '<p>' + currentQuestion + '</p>';
-            quizEngine.questionDiv.html(currentQuestionHtml);
-    };
+            var currentQuestion = allQuestions[quizEngine.currentQuestionIndex];
+            var theTemplateScript = $("#tempQ").html();
+            var theTemplate = Handlebars.compile(theTemplateScript);
+            quizEngine.questionDiv.append(theTemplate(currentQuestion));
+        };
 
         quizEngine.print_answers = function () {
             var currentChoices = allQuestions[this.currentQuestionIndex].choices;

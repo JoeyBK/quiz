@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <title></title>
     <script src="jquery-2.1.1.js"></script>
+    <script src="handlebars-v1.3.0.js"></script>
 </head>
 <body>
+
+
+
 <div id="quiz-container">
     <h1>Quiz Show!</h1>
     <div id="question"></div>
@@ -13,6 +17,11 @@
     <div id="score"></div>
     <button id="button">NEXT</button>
 </div>
+
+<script id="tempQ" type="x-handlebars-template">
+    <p>{{question}}</p>
+</script>
+
 <script src="quizShow.js"></script>
 </body>
 </html>
