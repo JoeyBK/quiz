@@ -1,0 +1,22 @@
+[
+    {
+        "question" : "Before it was named JavaScript, what was the language called?",
+        "choices" : ["TypeScript", "Java", "JScript", "LiveScript"],
+        "correctAnswer" : 3
+    },
+    {
+        "question" : "Who did originally develop JavaScript?",
+        "choices" : ["Bill Gates", "Brendan Eich", "Douglas CrockFord", "Nicholas Zakas", "Steve Jobs"],
+        "correctAnswer" : 1
+    },
+    {
+        "question" : "Which browser was the first to implement JavaScript?",
+        "choices" : ["Internet Explorer", "Netscape Navigator", "Opera"],
+        "correctAnswer" : 1
+    },
+    {
+        "question" : "Microsoft called JavaScript something else to avoid trademark issues. What was that name?",
+        "choices" : ["MicroScript", "IEScript", "VBScript", "JScript", "BasicScript"],
+        "correctAnswer" : 3
+    }
+]
