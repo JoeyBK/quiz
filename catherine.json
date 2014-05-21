@@ -1,0 +1,22 @@
+[
+    {
+        "question" : "How much do I love you?",
+        "choices" : ["not much", "somewhat", "so much so much so much!"],
+        "correctAnswer" : 2
+    },
+    {
+        "question" : "What item of clothing is worn under pants?",
+        "choices" : ["unmentionables", "panties", "undies", "UHHNDah pants!"],
+        "correctAnswer" : 3
+    },
+    {
+        "question" : "How do you make my heart feel?",
+        "choices" : ["tired", "sad", "squeezy!"],
+        "correctAnswer" : 2
+    },
+    {
+        "question" : "What is your favorite body part?",
+        "choices" : ["toes", "knees", "elbows", "BUTTS!"],
+        "correctAnswer" : 3
+    }
+]

@@ -1,12 +1,10 @@
 $(document).ready(function(){
 
     function returnAjax (){
-        return $.get('all_questions.json');
+        return $.get('catherine.json');
     }
 
     returnAjax().done(function(allQuestions){
-
-
 
         var quizEngine = {};
         quizEngine.currentQuestionIndex = 0;
@@ -40,7 +38,7 @@ $(document).ready(function(){
 
         quizEngine.compute_score = function () {
             quizEngine.clear_question();
-            $('#score').html("Your score: " + quizEngine.score);
+            $('#score').html("correct answers: " + quizEngine.score + "!");
         };
 
         quizEngine.next_question = function () {
