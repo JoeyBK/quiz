@@ -13,13 +13,21 @@
 <div id="quiz-container">
     <h1>Quiz Show!</h1>
     <div id="question"></div>
-    <div id="answers"></div>
+    <ul id="answers"></ul>
     <div id="score"></div>
     <button id="button">NEXT</button>
 </div>
 
-<script id="tempQ" type="x-handlebars-template">
+<script id="questionTemplate" type="x-handlebars-template">
     <p>{{question}}</p>
+</script>
+
+<script id="choicesTemplate" type="x-handlebars-template">
+   {{#each choices}}
+        <input type="radio" name="currentAnswer" class="radioAnswer" id="{{this}}">
+        <label for="{{this}}">{{this}}</label>
+        <br>
+    {{/each}}
 </script>
 
 <script src="quizShow.js"></script>

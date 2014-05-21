@@ -26,24 +26,16 @@ $(document).ready(function(){
 
         quizEngine.print_question = function () {
             var currentQuestion = allQuestions[quizEngine.currentQuestionIndex];
-            var theTemplateScript = $("#tempQ").html();
+            var theTemplateScript = $("#questionTemplate").html();
             var theTemplate = Handlebars.compile(theTemplateScript);
             quizEngine.questionDiv.append(theTemplate(currentQuestion));
         };
 
         quizEngine.print_answers = function () {
-            var currentChoices = allQuestions[this.currentQuestionIndex].choices;
-            currentChoices.forEach(function (e) {
-                var currentChoicesHtml = '';
-                currentChoicesHtml += '<input type="radio"';
-                currentChoicesHtml += 'name="currentAnswer"';
-                currentChoicesHtml += 'class="radioAnswer"';
-                currentChoicesHtml += 'value="' + e + '">';
-                currentChoicesHtml += '<label for="'+e+'">';
-                currentChoicesHtml += e;
-                currentChoicesHtml += '</label><br>';
-                quizEngine.answersDiv.append(currentChoicesHtml);
-            });
+            var currentChoices = allQuestions[quizEngine.currentQuestionIndex];
+            var theTemplateScript = $("#choicesTemplate").html();
+            var theTemplate = Handlebars.compile(theTemplateScript);
+            var temp = quizEngine.answersDiv.append(theTemplate(currentChoices));
         };
 
         quizEngine.compute_score = function () {
@@ -66,7 +58,7 @@ $(document).ready(function(){
             var radios = quizEngine.answersDiv.find('input');
             for (var i = 0; i < radios.length; i++) {
                 if (radios[i].checked) {
-                    var value = radios[i].value;
+                    var value = radios[i].id;
                     var correct_answer_index = allQuestions[quizEngine.currentQuestionIndex].correctAnswer;
                     var currentCorrectAnswer = allQuestions[quizEngine.currentQuestionIndex].choices[correct_answer_index];
                     if (value == currentCorrectAnswer) {
