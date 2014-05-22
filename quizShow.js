@@ -38,7 +38,11 @@ $(document).ready(function(){
 
         quizEngine.compute_score = function () {
             quizEngine.clear_question();
-            $('#score').html("correct answers: " + quizEngine.score + "!");
+            if(quizEngine.score >= 3){
+                $('#score').html("Smarty-pants! You answered " + quizEngine.score + " out of " + allQuestions.length + " questions correctly!");
+            }else{
+                $('#score').html("You're dumb! You answered " + quizEngine.score + " out of " + allQuestions.length + " questions correctly!");
+            }
         };
 
         quizEngine.next_question = function () {
@@ -62,7 +66,7 @@ $(document).ready(function(){
                     if (value == currentCorrectAnswer) {
                         quizEngine.score++;
                     } else {
-                        console.log("wrong answer");
+                        alert("wrong answer!");
                     }
                 }
             }
